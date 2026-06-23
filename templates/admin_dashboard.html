@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>👨‍💼 Admin Dashboard</h1>
+    <br>
+
+<div class="cards">
+
+    <div class="card">
+        <h2>{{ total }}</h2>
+        <p>Total Complaints</p>
+    </div>
+
+    <div class="card">
+        <h2>{{ pending }}</h2>
+        <p>Pending</p>
+    </div>
+
+    <div class="card">
+        <h2>{{ resolved }}</h2>
+        <p>Resolved</p>
+    </div>
+
+</div>
+
+<br>
+
+    <table border="1" width="100%" cellpadding="10">
+
+        <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+
+        {% for complaint in complaints %}
+
+        <tr>
+
+            <td>{{ complaint[0] }}</td>
+
+            <td>{{ complaint[1] }}</td>
+
+            <td>{{ complaint[2] }}</td>
+
+            <td>
+
+                {% if complaint[3] == 'Resolved' %}
+                    ✅ Resolved
+                {% else %}
+                    ⏳ Pending
+                {% endif %}
+
+            </td>
+
+            <td>
+
+                {% if complaint[3] != 'Resolved' %}
+
+                <a href="/resolve/{{ complaint[0] }}">
+                    <button>
+                        ✔ Resolve
+                    </button>
+                </a>
+
+                {% else %}
+
+                ✔ Done
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    <br><br>
+
+    <a href="/admin">
+        <button>🚪 Logout</button>
+    </a>
+
+</div>
+
+</body>
+</html>
